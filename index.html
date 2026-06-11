@@ -167,6 +167,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;ba
 .note-sync-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;margin-left:8px;vertical-align:middle}
 .note-sync-badge.on{background:#dcfce7;color:#15803d}
 .note-sync-badge.off{background:#fef3c7;color:#b45309}
+.owner-select{font-size:11px;padding:3px 6px;border:1px solid var(--border);border-radius:6px;background:#fff;color:#1e293b;max-width:160px;cursor:pointer}
+.owner-select:focus{outline:2px solid var(--blue);outline-offset:-2px}
 </style>
 </head>
 <body>
@@ -5917,6 +5919,7 @@ function exportPartnersPortfolioCSV(){
   if(!table)return;
   const esc=v=>'"'+String(v).replace(/"/g,'""')+'"';
   const cellText=td=>{
+    const sel=td.querySelector('select'); if(sel) return sel.value;
     if(td.querySelector('[style*="background:#22c55e"]'))return 'х';
     return td.textContent.trim().replace(/\s+/g,' ');
   };
@@ -5999,6 +6002,32 @@ function exportPartnersPortfolioCSV(){
       cells.push(td);
     });
 
+    // Випадаючий список Owner (5-та колонка) — спільний для всіх
+    const OWNERS = ['Vitaliia Hrabova','Mark Voloshyn','Viktor Skalivskyi','Mykhailo Brynchak'];
+    const normOwner = s => (s||'').toLowerCase().replace(/[^a-zа-яії]/g,'');
+    function matchOwner(text){
+      const n = normOwner(text); if(!n) return '';
+      for(const o of OWNERS){ if(normOwner(o) === n) return o; }
+      for(const o of OWNERS){ if(n.slice(0,8) === normOwner(o).slice(0,8)) return o; }
+      return '';
+    }
+    const ownerSelects = [];
+    dataRows.forEach((tr,i)=>{
+      const ownerTd = tr.children[4];
+      if(!ownerTd) { ownerSelects.push(null); return; }
+      const existing = ownerTd.textContent.trim();
+      const sel = document.createElement('select');
+      sel.className = 'owner-select';
+      sel.setAttribute('data-owner-key', keys[i]);
+      let html = '<option value="">—</option>';
+      OWNERS.forEach(o=>{ html += '<option value="'+o+'">'+o+'</option>'; });
+      sel.innerHTML = html;
+      sel.value = matchOwner(existing);
+      ownerTd.textContent = '';
+      ownerTd.appendChild(sel);
+      ownerSelects.push(sel);
+    });
+
     function localData(){ try{ return JSON.parse(localStorage.getItem(LS_KEY) || '{}'); }catch(e){ return {}; } }
     function saveLocal(d){ try{ localStorage.setItem(LS_KEY, JSON.stringify(d)); }catch(e){} }
 
@@ -6007,6 +6036,11 @@ function exportPartnersPortfolioCSV(){
         if(td === document.activeElement) return; // не чіпаємо клітинку, яку зараз редагують
         const v = d[keys[i]] || '';
         if(td.textContent !== v) td.textContent = v;
+      });
+      ownerSelects.forEach((sel,i)=>{
+        if(!sel || sel === document.activeElement) return;
+        const v = d['owner:' + keys[i]];
+        if(v !== undefined && sel.value !== v) sel.value = v;
       });
     }
 
@@ -6046,6 +6080,15 @@ function exportPartnersPortfolioCSV(){
         const k = keys[i], val = td.textContent;
         const d = localData(); d[k] = val; saveLocal(d);
         t = setTimeout(()=>pushChange(k, val), 700);
+      });
+    });
+
+    ownerSelects.forEach((sel,i)=>{
+      if(!sel) return;
+      sel.addEventListener('change',()=>{
+        const k = 'owner:' + keys[i], val = sel.value;
+        const d = localData(); d[k] = val; saveLocal(d);
+        pushChange(k, val);
       });
     });
 
