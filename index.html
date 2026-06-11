@@ -169,6 +169,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;ba
 .note-sync-badge.off{background:#fef3c7;color:#b45309}
 .owner-select{font-size:11px;padding:3px 6px;border:1px solid var(--border);border-radius:6px;background:#fff;color:#1e293b;max-width:160px;cursor:pointer}
 .owner-select:focus{outline:2px solid var(--blue);outline-offset:-2px}
+.brandcard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.brandcard-hd{color:#fff;font-weight:800;font-size:13px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between}
+.brandcard-hd .cnt{font-size:10px;font-weight:700;background:rgba(255,255,255,.22);padding:2px 9px;border-radius:999px}
+.brandcard-list{list-style:none;margin:0;padding:6px}
+.brandcard-list li{font-size:12px;font-weight:600;color:#1e293b;padding:7px 10px;border-radius:6px;display:flex;align-items:center;gap:8px}
+.brandcard-list li:nth-child(odd){background:#f8fafc}
+.brandcard-list li:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.5;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -5521,6 +5528,71 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;ba
     </table>
     </div>
   </div>
+
+  <!-- BRAND OWNERSHIP MATRIX -->
+  <div style="font-size:12px;font-weight:800;color:#1e293b;margin-bottom:4px;margin-top:4px">👥 Brand Ownership — Responsible Managers</div>
+  <div style="font-size:11px;color:#64748b;margin-bottom:12px">Хто веде якого партнера. <span style="font-weight:700;color:#2563eb">39</span> брендів · 3 менеджери.</div>
+  <div class="g3" style="margin-bottom:28px">
+
+    <div class="brandcard" style="color:#2563eb">
+      <div class="brandcard-hd" style="background:#2563eb"><span>Krystyna</span><span class="cnt">6 брендів</span></div>
+      <ul class="brandcard-list">
+        <li>LEPRUKON</li>
+        <li>DIMPYVA</li>
+        <li>CHILL TIME</li>
+        <li>RODYNNA KOVBASKA</li>
+        <li>NO TABOO</li>
+        <li>VAPE SHOP KYIV</li>
+      </ul>
+    </div>
+
+    <div class="brandcard" style="color:#16a34a">
+      <div class="brandcard-hd" style="background:#16a34a"><span>Mykhailo</span><span class="cnt">21 бренд</span></div>
+      <ul class="brandcard-list">
+        <li>HOP HEY</li>
+        <li>BEER MARKET</li>
+        <li>KOPIYKA</li>
+        <li>LOKO</li>
+        <li>PYVNA BORODA</li>
+        <li>SANTIM</li>
+        <li>KOPIYKA MINI</li>
+        <li>OKKO</li>
+        <li>BRSM</li>
+        <li>ATB</li>
+        <li>LIKI 24</li>
+        <li>CAFE RYNOK</li>
+        <li>BEERLAND</li>
+        <li>WINETIME</li>
+        <li>SPRAGA</li>
+        <li>MAXBEER</li>
+        <li>FIOWERS UA</li>
+        <li>TAISTRA</li>
+        <li>O'NDE</li>
+        <li>SPAR</li>
+        <li>FORA</li>
+      </ul>
+    </div>
+
+    <div class="brandcard" style="color:#475569">
+      <div class="brandcard-hd" style="background:#475569"><span>Viktor</span><span class="cnt">12 брендів</span></div>
+      <ul class="brandcard-list">
+        <li>ANRI</li>
+        <li>RUKAVYCHKA</li>
+        <li>REMESLO BREWERY</li>
+        <li>PYVNE REMESLO</li>
+        <li>ROZETKA</li>
+        <li>VARUS</li>
+        <li>THRASH</li>
+        <li>E-zoo</li>
+        <li>POCT</li>
+        <li>TOCHKA</li>
+        <li>FLOWER SHOP</li>
+        <li>VAPORS</li>
+      </ul>
+    </div>
+
+  </div>
+
   <!-- LINKS -->
   <div style="font-size:12px;font-weight:800;color:#1e293b;margin-bottom:10px;margin-top:4px">🔗 Process Links & Presentations</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px">
