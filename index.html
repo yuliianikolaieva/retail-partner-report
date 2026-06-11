@@ -6075,7 +6075,7 @@ function exportPartnersPortfolioCSV(){
     });
 
     // Випадаючий список Owner (5-та колонка) — спільний для всіх
-    const OWNERS = ['Vitaliia Hrabova','Mark Voloshyn','Viktor Skalivskyi','Mykhailo Brynchak'];
+    const OWNERS = ['Vitaliia Hrabova','Mark Voloshyn','Viktor Skalivskyi','Mykhailo Brynchak','Yuliia Nikolaieva'];
     const normOwner = s => (s||'').toLowerCase().replace(/[^a-zа-яії]/g,'');
     function matchOwner(text){
       const n = normOwner(text); if(!n) return '';
